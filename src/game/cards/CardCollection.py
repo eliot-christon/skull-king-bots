@@ -29,6 +29,23 @@ class CardCollection:
     
     def __setitem__(self, index:int, card:Card) -> None:
         self.__cards[index] = card
+    
+    def __add__(self, other:"CardCollection") -> "CardCollection":
+        return CardCollection(self.__cards + other.__cards)
+    
+    def __iadd__(self, other:"CardCollection") -> "CardCollection":
+        self.__cards += other.__cards
+        return self
+    
+    def __sub__(self, other:"CardCollection") -> "CardCollection":
+        return CardCollection([card for card in self.__cards if card not in other.__cards])
+    
+    def __isub__(self, other:"CardCollection") -> "CardCollection":
+        self.__cards = [card for card in self.__cards if card not in other.__cards]
+        return self
+    
+    def __eq__(self, other:"CardCollection") -> bool:
+        return self.__cards == other.__cards
 
     def add(self, card:Card) -> None:
         """Add a card to the collection"""
@@ -42,10 +59,6 @@ class CardCollection:
         """Shuffle the collection"""
         import random
         random.shuffle(self.__cards)
-    
-    def sort(self) -> None:
-        """Sort the collection"""
-        self.__cards.sort(key=lambda x: x.value)
     
     def clear(self) -> None:
         """Clear the collection"""
