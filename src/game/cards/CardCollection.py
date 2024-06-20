@@ -6,7 +6,7 @@ from .NumberCard import NumberCard, TrumpCard
 from .CharacterCard import CharacterCard, Pirate, Mermaid, SkullKing, Flag, Tigress, Jack
 from .AnimalCard import AnimalCard, Krakken, Whale, Plankton
 
-from typing import List
+from typing import List, Union
 
 
 class CardCollection:
@@ -24,8 +24,13 @@ class CardCollection:
     def __iter__(self):
         return iter(self.__cards)
     
-    def __getitem__(self, index:int) -> Card:
-        return self.__cards[index]
+    def __getitem__(self, index: Union[int, slice]) -> Union[Card, 'CardCollection']:
+        if isinstance(index, int):
+            return self.__cards[index]
+        elif isinstance(index, slice):
+            return CardCollection(self.__cards[index])
+        else:
+            raise TypeError("Index must be an int or slice")
     
     def __setitem__(self, index:int, card:Card) -> None:
         self.__cards[index] = card
@@ -117,6 +122,28 @@ class CardCollection:
     def cards_of_type(self, card_type:type) -> "CardCollection":
         """Return the cards of a specific type"""
         return CardCollection([card for card in self.__cards if isinstance(card, card_type)])
+
+    def bonus(self, winning_card:Card) -> int:
+        """Return the bonus points for the trick.
+        +10 for each 14-value card
+        +10 for the 14-value trump card
+        +20 for each Mermaid card if winning_card is Pirate
+        +30 for each Pirate (value > 14) card if winning_card is SkullKing
+        +40 for the SkullKing card if winning_card is Mermaid
+        """
+        bonus = 0
+        for card in self.__cards:
+            if card.value == 14:
+                bonus += 10
+            if isinstance(card, TrumpCard) and card.value == 14:
+                bonus += 10
+            elif isinstance(card, Mermaid) and isinstance(winning_card, Pirate):
+                bonus += 20
+            elif isinstance(card, Pirate) and card.value > 14 and isinstance(winning_card, SkullKing):
+                bonus += 30
+            elif isinstance(card, SkullKing) and isinstance(winning_card, Mermaid):
+                bonus += 40
+        return bonus
 
     def winning_card(self) -> Card:
         """Return the winning card"""
