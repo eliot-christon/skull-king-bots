@@ -13,10 +13,13 @@ class Player:
     def __init__(self, name:str) -> None:
         self._name = name
         self._hand = CardCollection([])
+        self._bet = 0
+        self._tricks = 0
+        self._bonus = 0
         self._score = 0
     
     def __str__(self) -> str:
-        return f"Player: {self._name}, Score: {self._score}, Hand: {self._hand}"
+        return f"Player: {self._name}, Score: {self._score}"
     
     @property
     def name(self) -> str:
@@ -29,23 +32,50 @@ class Player:
     @property
     def score(self) -> int:
         return self._score
+
+    @property
+    def bet(self) -> int:
+        return self._bet
     
-    def add_card(self, card:"Card") -> None:
-        self._hand.add(card)
+    @property
+    def tricks(self) -> int:
+        return self._tricks
     
-    def add_cards(self, cards:CardCollection) -> None:
-        self._hand = self._hand + cards
+    @property
+    def bonus(self) -> int:
+        return self._bonus
+    
+    @bet.setter
+    def bet(self, bet:int) -> None:
+        self._bet = bet
+    
+    @tricks.setter
+    def tricks(self, tricks:int) -> None:
+        self._tricks = tricks
+    
+    @score.setter
+    def score(self, score:int) -> None:
+        self._score = score
+    
+    @hand.setter
+    def hand(self, hand:CardCollection) -> None:
+        self._hand = hand
+
+    @bonus.setter
+    def bonus(self, bonus:int) -> None:
+        self._bonus = bonus
     
     def play_card(self, card:"Card") -> None:
         self._hand.remove(card)
     
+    def details(self) -> str:
+        return f"Player: {self._name}, Score: {self._score}, Bet: {self._bet}, Tricks: {self._tricks}, Bonus: {self._bonus}"
+
     @abstractmethod
-    def choose_card(self) -> "Card":
+    def choose_card(self, requested_color:str) -> "Card":
         pass
 
-    def add_score(self, score:int) -> None:
-        self._score += score
-    
-    def reset_hand(self) -> None:
-        self._hand.clear()
+    @abstractmethod
+    def place_bet(self) -> int:
+        pass
     

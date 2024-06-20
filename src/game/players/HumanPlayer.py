@@ -11,9 +11,14 @@ class HumanPlayer(Player):
     def __init__(self, name:str) -> None:
         super().__init__(name=name)
     
-    def choose_card(self) -> "Card":
+    def choose_card(self, requested_color:str) -> "Card":
         print("Choose a card to play.")
         print(self._hand)
         card = input("Enter the index of the card you want to play: ")
         return self._hand[int(card)]
+    
+    def place_bet(self) -> int:
+        print("Place a bet.")
+        bet = input("Enter your bet: ")
+        return int(bet)
 
