@@ -158,5 +158,30 @@ class CardCollection:
         raise Exception("Exception in winning_card(), should not reach here")
 
 
+def get_basic_deck() -> CardCollection:
+    result = CardCollection([])
+    for color in ['yellow', 'green', 'violet']:
+        for value in range(1, 15):
+            result.add(NumberCard(color, value))
+    for value in range(1, 15):
+        result.add(TrumpCard(value))
+    
+    for _ in range(5): result.add(Flag())
+    for _ in range(5): result.add(Pirate())
+    for _ in range(2): result.add(Mermaid())
+    for _ in range(1): result.add(SkullKing())
+
+    result.add(Jack())
+    result.add(Tigress())
+
+    result.add(Whale())
+    result.add(Plankton())
+    result.add(Krakken())
+
+    return result
+
+
+
+
 if __name__ == "__main__":
     print("This module is not meant to be run on its own.")
