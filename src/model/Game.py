@@ -3,9 +3,8 @@ __email__ = 'eliot.christon@gmail.com'
 
 from .players.Player import Player
 from .cards.CardCollection import CardCollection, get_basic_deck
-from .cards.Card import Card
 
-from typing import List, Dict
+from typing import List
 
 
 class Game:
@@ -15,6 +14,7 @@ class Game:
         self._players = players
         self._deck = get_basic_deck()
         self._round = 1
+        self._current_player_index = 0
 
     def __str__(self) -> str:
         return f"Game: Players: {self._players}, Round: {self._round}"
@@ -34,6 +34,10 @@ class Game:
     @round.setter # TODO: delete this setter
     def round(self, round:int) -> None:
         self._round = round
+    
+    def roll_players(self, offset:int=1) -> List[Player]:
+        """Roll the players by the offset"""
+        return self._players[offset:] + self._players[:offset]
 
     def deal(self) -> None:
         """Deal cards to the players"""
@@ -54,7 +58,8 @@ class Game:
     def play_trick(self) -> None:
         """Play a trick"""
         trick = CardCollection([])
-        for player in self._players:
+        players = self.roll_players(offset=self._current_player_index)
+        for player in players:
             chosen_card = player.choose_card(requested_color=trick.requested_color())
             trick.add(chosen_card)
             player.play_card(chosen_card)
@@ -63,7 +68,8 @@ class Game:
         if winning_card is None:
             return
         bonus = trick.bonus(winning_card)
-        win_trick_player = self._players[trick.first_index_of(winning_card)]
+        self._current_player_index = trick.first_index_of(winning_card)
+        win_trick_player = players[self._current_player_index]
         win_trick_player.tricks += 1
         win_trick_player.bonus += bonus
 
@@ -83,12 +89,14 @@ class Game:
 
     def play_round(self) -> None:
         """Play a round of the game"""
+        self._current_player_index = 0
         self.deal()
         self.play_bets()
         for _ in range(self.round):
             self.play_trick()
         self.calculate_scores()
         self._round += 1
+        self._players = self.roll_players()
 
     def play_game(self) -> None:
         """Play the game"""
