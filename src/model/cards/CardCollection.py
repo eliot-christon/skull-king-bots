@@ -16,7 +16,8 @@ class CardCollection:
         self.__cards = cards
 
     def __str__(self) -> str:
-        return f"CARD COLLECTION: {', '.join(str(card) for card in self.__cards)}"
+        str_card_list = ["( {} )" .format(card) for card in self.__cards]
+        return f"{', '.join(str_card_list)}"
     
     def __len__(self) -> int:
         return len(self.__cards)
