@@ -147,12 +147,13 @@ class Game:
     def end_trick(self) -> None:
         """End a trick, calculate the winner and give the points"""
         winning_card = self._trick.winning_card()
+        offset = self._players.index(self._last_winning_player)
         if winning_card is None:
             # search for the Krakken card, the player next to it will start the next trick
-            self._last_winning_player = self._players[(self._trick.first_index_of(Krakken()) + 1) % len(self._players)]
+            self._last_winning_player = self._players[(offset + self._trick.first_index_of(Krakken()) + 1) % len(self._players)]
         else:
             bonus = self._trick.bonus(winning_card)
-            self._last_winning_player = self._players[self._trick.first_index_of(winning_card)]
+            self._last_winning_player = self._players[(offset + self._trick.first_index_of(winning_card)) % len(self._players)]
             self._last_winning_player.tricks += 1
             self._last_winning_player.bonus += bonus
         if self.delays:
