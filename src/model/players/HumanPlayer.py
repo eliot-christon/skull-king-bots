@@ -14,7 +14,7 @@ class HumanPlayer(Player):
         self.__graphics = graphics
     
     def choose_card(self, requested_color:str) -> "Card":
-        playable_cards = self._hand.cards_of_color(requested_color)
+        playable_cards = self.playable_cards(requested_color)
         if len(playable_cards) == 0:
             playable_cards = self._hand
         return self.__graphics.choose_card(self._hand, playable_cards)

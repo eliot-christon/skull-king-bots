@@ -7,6 +7,7 @@ from .cards.AnimalCard import Krakken
 
 from typing import List
 from enum import Enum, auto
+import time
 
 
 class GameState(Enum):
@@ -24,13 +25,14 @@ class GameState(Enum):
 class Game:
     """Game class for the Skull King game"""
 
-    def __init__(self, players:List[Player]) -> None:
+    def __init__(self, players:List[Player], delays:bool=True) -> None:
         self._players = players
         self._deck = get_basic_deck()
         self._round = 1
         self._trick = CardCollection([])
         self._last_winning_player = Player("Dummy1")
         self._current_player = Player("Dummy2")
+        self.delays = delays
         self._running = True
 
         self.current_state = GameState.START_ROUND
@@ -154,11 +156,15 @@ class Game:
             self._last_winning_player = self._players[self._trick.first_index_of(winning_card)]
             self._last_winning_player.tricks += 1
             self._last_winning_player.bonus += bonus
+        if self.delays:
+            time.sleep(2)
     
     def end_round(self) -> None:
         """End a round, calculate the scores"""
         self.calculate_scores()
         self._round += 1
+        if self.delays:
+            time.sleep(4)
 
     def end_game(self) -> None:
         """End the game"""

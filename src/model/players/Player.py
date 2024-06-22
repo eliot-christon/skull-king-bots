@@ -3,6 +3,8 @@ __email__ = 'eliot.christon@gmail.com'
 
 from ..cards.CardCollection import CardCollection
 from ..cards.Card import Card
+from ..cards.NumberCard import NumberCard
+
 
 from abc import abstractmethod
 
@@ -70,6 +72,12 @@ class Player:
     
     def details(self) -> str:
         return f"Player: {self._name}, Score: {self._score}, Bet: {self._bet}, Tricks: {self._tricks}, Bonus: {self._bonus}"
+    
+    def playable_cards(self, requested_color:str) -> CardCollection:
+        """Return the cards that can be played"""
+        if len(self._hand.cards_of_color(requested_color)) == 0:
+            return self._hand
+        return self._hand - self.hand.cards_of_type(NumberCard) + self._hand.cards_of_color(requested_color)
 
     @abstractmethod
     def choose_card(self, requested_color:str) -> "Card":
