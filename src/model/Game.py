@@ -112,7 +112,6 @@ class Game:
 
     def start_round(self) -> None:
         """Start a round of the game"""
-        self._players = self.roll_players()
         self._trick = CardCollection([])
         for player in self._players:
             player.bet = 0
@@ -163,6 +162,7 @@ class Game:
         """End a round, calculate the scores"""
         self.calculate_scores()
         self._round += 1
+        self._players = self.roll_players()
         if self.delays:
             time.sleep(4)
 
