@@ -23,8 +23,8 @@ class CharacterCard(Card):
 class Pirate(CharacterCard):
     """Pirate class for the Skull King game"""
 
-    def __init__(self) -> None:
-        super().__init__(value=16, name="Pirate", color="red")
+    def __init__(self, number=1) -> None:
+        super().__init__(value=16, name="Pirate " + str(number), color="red")
     
     def details(self) -> str:
         return "The Pirate wins the trick, unless the Skull King is played or another Pirate is played before it."
@@ -59,8 +59,8 @@ class Tigress(Pirate):
 class Mermaid(CharacterCard):
     """Mermaid class for the Skull King game"""
 
-    def __init__(self) -> None:
-        super().__init__(value=15, name="Mermaid", color="cyan")
+    def __init__(self, number=1) -> None:
+        super().__init__(value=15, name="Mermaid " + str(number), color="cyan")
     
     def details(self) -> str:
         return "The Mermaid wins the trick, unless a Pirate is played or another Mermaid is played before it."

@@ -195,8 +195,8 @@ def get_basic_deck() -> CardCollection:
         result.add(TrumpCard(value))
     
     for _ in range(5): result.add(Flag())
-    for _ in range(5): result.add(Pirate())
-    for _ in range(2): result.add(Mermaid())
+    for i in range(5): result.add(Pirate(i+1))
+    for i in range(2): result.add(Mermaid(i+1))
     for _ in range(1): result.add(SkullKing())
 
     result.add(Jack())

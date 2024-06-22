@@ -8,7 +8,7 @@ class NumberCard(Card):
     """NumberCard class for the Skull King game"""
 
     def __init__(self, color:str, value:int) -> None:
-        super().__init__(value=value, name=str(value), color=color)
+        super().__init__(value=value, name=str(value) + " " + color, color=color)
     
     def __str__(self) -> str:
         return f"{self._name} of {self._color}"
