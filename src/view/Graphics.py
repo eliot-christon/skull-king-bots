@@ -12,7 +12,11 @@ class Graphics(ABC):
     """Abstract class for graphics"""
 
     def __init__(self) -> None:
-        pass
+        self._running = True
+        
+    @property
+    def running(self) -> bool:
+        return self._running
 
     @abstractmethod
     def render(self, game:Game) -> None:

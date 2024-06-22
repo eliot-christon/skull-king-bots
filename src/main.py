@@ -5,13 +5,14 @@ from .model.Game import Game
 from .model.players.ComputerPlayer import ComputerPlayer
 from .model.players.HumanPlayer import HumanPlayer
 from .view.ConsoleGraphics import ConsoleGraphics
+from .view.TkinterGraphics import TkinterGraphics
 from .GameController import GameController
 
 
 def main():
     """Main function"""
     
-    graphics = ConsoleGraphics()
+    graphics = TkinterGraphics()
     
     delay = 0.2
     player1 = ComputerPlayer("Player 1", delay=delay)

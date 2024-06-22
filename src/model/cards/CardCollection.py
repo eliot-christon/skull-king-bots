@@ -167,12 +167,12 @@ class CardCollection:
             if len(self.cards_of_type(SkullKing)) > 0:
                 # if Mermaid in the trick
                 if len(self.cards_of_type(Mermaid)) > 0:
-                    return Mermaid()
+                    return self.first_type_card(Mermaid)
                 return SkullKing()
             # elif Pirate in the trick
             elif any(isinstance(card, Pirate) for card in self.__cards if card.value > 14):
                 return next(card for card in self.__cards if isinstance(card, Pirate) and card.value > 14)
-            return Mermaid()
+            return self.first_type_card(Mermaid)
         
         # else: # if AnimalCard is played
         role = self.last_type_card(AnimalCard).__class__
@@ -188,7 +188,7 @@ class CardCollection:
 
 def get_basic_deck() -> CardCollection:
     result = CardCollection([])
-    for color in ['yellow', 'green', 'violet']:
+    for color in ['brown', 'green', 'purple']:
         for value in range(1, 15):
             result.add(NumberCard(color, value))
     for value in range(1, 15):

@@ -13,7 +13,7 @@ class GameController:
     
     def run(self) -> None:
         """Play the game"""
-        while self.__game.running:
+        while self.__game.running and self.__graphics.running:
             try:
                 self.__graphics.render(self.__game)
                 self.__game.game_step()

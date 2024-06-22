@@ -81,6 +81,10 @@ class Game:
     @property
     def running(self) -> bool:
         return self._running
+    
+    @property
+    def current_player(self) -> Player:
+        return self._current_player
 
 #%% CONDITIONS ======================================================================================
 
