@@ -1,1 +1,3 @@
-## Public implémentation of skull-king-bots
+# Skull King bots
+
+## Python implementation of the Skull King card game, with bots
