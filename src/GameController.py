@@ -15,7 +15,7 @@ class GameController:
         """Play the game"""
         while self.__game.running:
             try:
-                self.__graphics.render()
+                self.__graphics.render(self.__game)
                 self.__game.game_step()
             except KeyboardInterrupt:
                 break
