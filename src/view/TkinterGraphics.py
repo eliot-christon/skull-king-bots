@@ -29,7 +29,9 @@ class TkinterGraphics(Graphics):
         # Configure styles
         self.style = ttk.Style()
         self.style.configure('TFrame', background='#333333')
+        self.style.configure('TFrame.TFrame', background='#006666')
         self.style.configure('TLabel', background='#333333', foreground='#ffffff', font=('Arial', 12))
+        self.style.configure('TLabel.TLabel', background='#006666', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('TButton', foreground='#ffffff', background='#666666', font=('Arial', 12))
 
         # Frames
@@ -98,6 +100,7 @@ class TkinterGraphics(Graphics):
         return card_label
 
     def create_player_frame(self, player, current_player) -> ttk.Frame:
+        
         player_frame = ttk.Frame(self.top_frame, style='TFrame')
         
         player_name = ttk.Label(player_frame, text=player.name, style='TLabel')
@@ -114,6 +117,10 @@ class TkinterGraphics(Graphics):
 
         if player == current_player:
             player_frame.configure(style='TFrame.TFrame')  # Highlight current player
+            player_name.configure(style='TLabel.TLabel')
+            player_score.configure(style='TLabel.TLabel')
+            player_tricks.configure(style='TLabel.TLabel')
+            player_bonus.configure(style='TLabel.TLabel')
 
         return player_frame
 

@@ -164,6 +164,7 @@ class Game:
         self.calculate_scores()
         self._round += 1
         self._players = self.roll_players()
+        self._current_player = self._players[0]
         if self.delays:
             time.sleep(4)
 
