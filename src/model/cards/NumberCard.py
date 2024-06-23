@@ -11,10 +11,10 @@ class NumberCard(Card):
         super().__init__(value=value, name=str(value) + " " + color, color=color)
     
     def __str__(self) -> str:
-        return f"{self._name} of {self._color}"
+        return f"{self._name}"
 
     def details(self) -> str:
-        return f"The {self._name} of {self._color}."
+        return f"The {self._name}"
 
 
 class TrumpCard(NumberCard):

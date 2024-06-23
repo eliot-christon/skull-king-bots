@@ -76,7 +76,6 @@ class CardCollection:
         for card in self.__cards:
             copy.add(card)
         return copy
-    
 
 #%% GAME MECHANICS
 
@@ -179,8 +178,12 @@ class CardCollection:
         if role == Krakken:
             return None
         elif role == Plankton:
+            if len(self.cards_of_type(NumberCard)) == 0:
+                return (self - CardCollection([Plankton()])).lowest_card()
             return self.cards_of_type(NumberCard).lowest_card()
         elif role == Whale:
+            if len(self.cards_of_type(NumberCard)) == 0:
+                return self.highest_card()
             return self.cards_of_type(NumberCard).highest_card()
         
         raise Exception("Exception in winning_card(), should not reach here")
