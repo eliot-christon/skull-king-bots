@@ -5,7 +5,7 @@ from .players.Player import Player
 from .cards.CardCollection import CardCollection, get_basic_deck
 from .cards.AnimalCard import Krakken
 
-from typing import List
+from typing import List, Optional
 from enum import Enum, auto
 import time
 
@@ -30,8 +30,8 @@ class Game:
         self._deck = get_basic_deck()
         self._round = 1
         self._trick = CardCollection([])
-        self._last_winning_player = Player("Dummy1")
-        self._current_player = Player("Dummy2")
+        self._last_winning_player:Optional[Player] = None
+        self._current_player:Optional[Player] = None
         self.delays = delays
         self._running = True
 
