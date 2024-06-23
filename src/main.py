@@ -2,7 +2,7 @@ __author__ = 'Eliot Christon'
 __email__ = 'eliot.christon@gmail.com'
 
 from .model.Game import Game
-from .model.players.ComputerPlayer import ComputerPlayer
+from .model.players.RandomPlayer import RandomPlayer
 from .model.players.HumanPlayer import HumanPlayer
 from .view.ConsoleGraphics import ConsoleGraphics
 from .view.TkinterGraphics import TkinterGraphics
@@ -15,10 +15,10 @@ def main():
     graphics = TkinterGraphics()
     
     delay = 0.2
-    player1 = ComputerPlayer("Player 1", delay=delay)
-    player2 = ComputerPlayer("Player 2", delay=delay)
-    player3 = ComputerPlayer("Player 3", delay=delay)
-    player4 = ComputerPlayer("Player 4", delay=delay)
+    player1 = RandomPlayer("Player 1", delay=delay)
+    player2 = RandomPlayer("Player 2", delay=delay)
+    player3 = RandomPlayer("Player 3", delay=delay)
+    player4 = RandomPlayer("Player 4", delay=delay)
     player5 = HumanPlayer("The best", graphics)
 
     game = Game([player1, player2, player3, player4, player5])

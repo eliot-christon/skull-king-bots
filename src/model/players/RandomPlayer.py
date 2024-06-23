@@ -8,7 +8,7 @@ import random
 import time
 
 
-class ComputerPlayer(Player):
+class RandomPlayer(Player):
     """ComputerPlayer class for the Skull King game"""
 
     def __init__(self, name:str, delay:float=0.1) -> None:
