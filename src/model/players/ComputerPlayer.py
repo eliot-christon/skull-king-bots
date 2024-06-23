@@ -3,6 +3,7 @@ __email__ = 'eliot.christon@gmail.com'
 
 from .Player import Player
 from ..cards.Card import Card
+from ..cards.CardCollection import CardCollection
 
 from abc import abstractmethod
 
@@ -15,7 +16,7 @@ class ComputerPlayer(Player):
         self._delay = delay
     
     @abstractmethod
-    def choose_card(self, requested_color:str) -> "Card":
+    def choose_card(self, current_trick:CardCollection) -> "Card":
         pass
     
     @abstractmethod

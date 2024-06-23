@@ -139,7 +139,7 @@ class Game:
 
     def play_card(self) -> None:
         """Have the current player play a card"""
-        chosen_card = self._current_player.choose_card(requested_color=self._trick.requested_color())
+        chosen_card = self._current_player.choose_card(current_trick=self._trick)
         self._trick.add(chosen_card)
         self._current_player.play_card(chosen_card)
         self._current_player = self._players[(self._players.index(self._current_player) + 1) % len(self._players)]

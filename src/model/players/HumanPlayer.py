@@ -3,6 +3,7 @@ __email__ = 'eliot.christon@gmail.com'
 
 from .Player import Player
 from ..cards.Card import Card
+from ..cards.CardCollection import CardCollection
 from ...view.Graphics import Graphics
 
 
@@ -13,8 +14,8 @@ class HumanPlayer(Player):
         super().__init__(name=name)
         self.__graphics = graphics
     
-    def choose_card(self, requested_color:str) -> "Card":
-        playable_cards = self.playable_cards(requested_color)
+    def choose_card(self, current_trick:CardCollection) -> "Card":
+        playable_cards = self.playable_cards(current_trick.requested_color())
         if len(playable_cards) == 0:
             playable_cards = self._hand
         return self.__graphics.choose_card(self._hand, playable_cards)

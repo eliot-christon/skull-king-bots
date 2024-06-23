@@ -80,7 +80,7 @@ class Player(ABC):
         return self._hand - self.hand.cards_of_type(NumberCard) + self._hand.cards_of_color(requested_color)
 
     @abstractmethod
-    def choose_card(self, requested_color:str) -> "Card":
+    def choose_card(self, current_trick:CardCollection) -> "Card":
         pass
 
     @abstractmethod

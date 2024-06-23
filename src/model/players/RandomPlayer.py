@@ -3,6 +3,7 @@ __email__ = 'eliot.christon@gmail.com'
 
 from .ComputerPlayer import ComputerPlayer
 from ..cards.Card import Card
+from ..cards.CardCollection import CardCollection
 
 import random
 import time
@@ -14,9 +15,9 @@ class RandomPlayer(ComputerPlayer):
     def __init__(self, name:str, delay:float=0.1) -> None:
         super().__init__(name=name, delay=delay)
     
-    def choose_card(self, requested_color:str) -> "Card":
+    def choose_card(self, current_trick:CardCollection) -> "Card":
         time.sleep(self._delay)
-        playable_cards = self.playable_cards(requested_color)
+        playable_cards = self.playable_cards(current_trick.requested_color())
         return playable_cards[0]
     
     def place_bet(self) -> int:
