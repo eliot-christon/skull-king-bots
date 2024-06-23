@@ -17,9 +17,8 @@ class ComputerPlayer(Player):
     
     def choose_card(self, requested_color:str) -> "Card":
         time.sleep(self._delay)
-        if len(self.hand.cards_of_color(requested_color)) > 0:
-            return self.hand.cards_of_color(requested_color)[0]
-        return self.hand[0]
+        playable_cards = self.playable_cards(requested_color)
+        return playable_cards[0]
     
     def place_bet(self) -> int:
         time.sleep(self._delay)
