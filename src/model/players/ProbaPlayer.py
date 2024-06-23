@@ -9,6 +9,14 @@ import random
 import time
 
 
+
+def P_card_in_trick(card:Card, current_trick:CardCollection, N_occurences_left:int, N_cards_not_played:int, cards_to_play_in_trick:int) -> float:
+    if N_occurences_left == 0:
+        return 0.
+    if card in current_trick:
+        return 1.
+    return cards_to_play_in_trick * N_occurences_left / N_cards_not_played
+
 class ProbaPlayer(ComputerPlayer):
     """Proba Player class for the Skull King game, simulates a player that plays taking into account the probability of winning the trick"""
 
@@ -23,3 +31,7 @@ class ProbaPlayer(ComputerPlayer):
     def place_bet(self) -> int:
         time.sleep(self._delay)
         return random.randint(0, len(self.hand)) # TODO: Implement a better strategy
+    
+    def proba_of_winning_trick(self, current_trick:CardCollection, card:Card) -> float:
+        """Returns the probability of winning the trick if the player plays the given card"""
+        pass
