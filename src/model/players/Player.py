@@ -6,10 +6,10 @@ from ..cards.Card import Card
 from ..cards.NumberCard import NumberCard
 
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class Player:
+class Player(ABC):
     """Abstract Player class for the Skull King game"""
 
     def __init__(self, name:str) -> None:
