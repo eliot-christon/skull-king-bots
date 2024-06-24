@@ -5,7 +5,7 @@ from .players.Player import Player
 from .cards.CardCollection import CardCollection, get_basic_deck
 from .cards.AnimalCard import Krakken
 
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from enum import Enum, auto
 import time
 
@@ -32,6 +32,7 @@ class Game:
         self._trick = CardCollection([])
         self._last_winning_player:Optional[Player] = None
         self._current_player:Optional[Player] = None
+        self._round_history = CardCollection([])
         self.delays = delays
         self._running = True
 
@@ -118,6 +119,7 @@ class Game:
             player.tricks = 0
             player.bonus = 0
         self._last_winning_player = self._players[0] # Start the round with the first player
+        self._round_history = CardCollection([])
 
     def deal(self) -> None:
         """Deal cards to the players"""
@@ -139,7 +141,7 @@ class Game:
 
     def play_card(self) -> None:
         """Have the current player play a card"""
-        chosen_card = self._current_player.choose_card(current_trick=self._trick)
+        chosen_card = self._current_player.choose_card(features=self.features())
         self._trick.add(chosen_card)
         self._current_player.play_card(chosen_card)
         self._current_player = self._players[(self._players.index(self._current_player) + 1) % len(self._players)]
@@ -148,6 +150,7 @@ class Game:
         """End a trick, calculate the winner and give the points"""
         winning_card = self._trick.winning_card()
         offset = self._players.index(self._last_winning_player)
+        self._round_history += self._trick.copy()
         if winning_card is None:
             # search for the Krakken card, the player next to it will start the next trick
             self._last_winning_player = self._players[(offset + self._trick.first_index_of(Krakken()) + 1) % len(self._players)]
@@ -191,6 +194,16 @@ class Game:
                     player.score += 20*player.tricks + player.bonus
                 else:
                     player.score -= 10*abs(player.tricks - player.bet)
+    
+    def features(self) -> Dict[str, Any]:
+        """Return the features of the game"""
+        return {
+            "round": self.round,
+            "trick": self.trick,
+            "players": self.players,
+            "current_player": self.current_player,
+            "round_history": self._round_history
+        }
     
 #%% GAME LOOP ========================================================================================
 

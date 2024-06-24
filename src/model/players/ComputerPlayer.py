@@ -6,6 +6,7 @@ from ..cards.Card import Card
 from ..cards.CardCollection import CardCollection
 
 from abc import abstractmethod
+from typing import Dict, Any
 
 
 class ComputerPlayer(Player):
@@ -16,7 +17,7 @@ class ComputerPlayer(Player):
         self._delay = delay
     
     @abstractmethod
-    def choose_card(self, current_trick:CardCollection) -> "Card":
+    def choose_card(self, features:Dict[str, Any]) -> "Card":
         pass
     
     @abstractmethod

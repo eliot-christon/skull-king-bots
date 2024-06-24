@@ -44,7 +44,7 @@ class ConsoleGraphics(Graphics):
         return choice
     
     
-    def choose_card(self, hand: CardCollection, playable_cards: CardCollection) -> Card:
+    def choose_card_interaction(self, hand: CardCollection, playable_cards: CardCollection) -> Card:
         print("Choose a card to play.")
         print(playable_cards)
         choice = self.get_number(0, len(playable_cards)-1, "Enter the index of the card you want to play")

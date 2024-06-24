@@ -6,6 +6,8 @@ from ..cards.Card import Card
 from ..cards.CardCollection import CardCollection
 from ...view.Graphics import Graphics
 
+from typing import Dict, Any
+
 
 class HumanPlayer(Player):
     """HumanPlayer class for the Skull King game"""
@@ -14,11 +16,11 @@ class HumanPlayer(Player):
         super().__init__(name=name)
         self.__graphics = graphics
     
-    def choose_card(self, current_trick:CardCollection) -> "Card":
-        playable_cards = self.playable_cards(current_trick.requested_color())
+    def choose_card(self, features:Dict[str, Any]) -> "Card":
+        playable_cards = self.playable_cards(features["trick"].requested_color())
         if len(playable_cards) == 0:
             playable_cards = self._hand
-        return self.__graphics.choose_card(self._hand, playable_cards)
+        return self.__graphics.choose_card_interaction(self._hand, playable_cards)
     
     def place_bet(self) -> int:
         return self.__graphics.place_bet(self._hand)

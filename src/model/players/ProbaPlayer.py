@@ -7,6 +7,7 @@ from ..cards.CardCollection import CardCollection
 
 import random
 import time
+from typing import Dict, Any
 
 
 
@@ -23,9 +24,9 @@ class ProbaPlayer(ComputerPlayer):
     def __init__(self, name:str, delay:float=0.1) -> None:
         super().__init__(name=name, delay=delay)
     
-    def choose_card(self, current_trick:CardCollection) -> "Card":
+    def choose_card(self, features:Dict[str, Any]) -> "Card":
         time.sleep(self._delay)
-        playable_cards = self.playable_cards(current_trick.requested_color())
+        playable_cards = self.playable_cards(features["trick"].requested_color())
         return playable_cards[0] # TODO: Implement a better strategy
     
     def place_bet(self) -> int:

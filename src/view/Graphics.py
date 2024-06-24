@@ -24,7 +24,7 @@ class Graphics(ABC):
         pass
 
     @abstractmethod
-    def choose_card(self, hand:CardCollection, playable_cards:CardCollection) -> "Card":
+    def choose_card_interaction(self, hand:CardCollection, playable_cards:CardCollection) -> "Card":
         """Choose a card from the hand"""
         pass
     

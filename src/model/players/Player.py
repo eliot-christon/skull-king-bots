@@ -7,6 +7,7 @@ from ..cards.NumberCard import NumberCard
 
 
 from abc import ABC, abstractmethod
+from typing import Dict, Any
 
 
 class Player(ABC):
@@ -80,7 +81,7 @@ class Player(ABC):
         return self._hand - self.hand.cards_of_type(NumberCard) + self._hand.cards_of_color(requested_color)
 
     @abstractmethod
-    def choose_card(self, current_trick:CardCollection) -> "Card":
+    def choose_card(self, features:Dict[str, Any]) -> "Card":
         pass
 
     @abstractmethod

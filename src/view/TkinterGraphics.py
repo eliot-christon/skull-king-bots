@@ -133,7 +133,7 @@ class TkinterGraphics(Graphics):
             frame.destroy()
         self.player_frames.clear()
 
-    def choose_card(self, hand:CardCollection, playable_cards:CardCollection) -> Card:
+    def choose_card_interaction(self, hand:CardCollection, playable_cards:CardCollection) -> Card:
         self.selected_card_var.set("")  # Reset the selected card variable
         self.render_hand(playable_cards, hand - playable_cards)
         
