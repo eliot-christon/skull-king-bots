@@ -12,7 +12,7 @@ from typing import List, Union
 class CardCollection:
     """CardCollection class for the Skull King game. A collection of cards."""
 
-    def __init__(self, cards:List[Card]) -> None:
+    def __init__(self, cards:List[Card]=[]) -> None:
         self.__cards = cards
 
     def __str__(self) -> str:
@@ -190,7 +190,7 @@ class CardCollection:
 
 
 def get_basic_deck() -> CardCollection:
-    result = CardCollection([])
+    result = CardCollection()
     for color in ['brown', 'green', 'purple']:
         for value in range(1, 15):
             result.add(NumberCard(color, value))

@@ -29,10 +29,10 @@ class Game:
         self._players = players
         self._deck = get_basic_deck()
         self._round = 1
-        self._trick = CardCollection([])
+        self._trick = CardCollection()
         self._last_winning_player:Optional[Player] = None
         self._current_player:Optional[Player] = None
-        self._round_history = CardCollection([])
+        self._round_history = CardCollection()
         self.delays = delays
         self._running = True
 
@@ -113,13 +113,13 @@ class Game:
 
     def start_round(self) -> None:
         """Start a round of the game"""
-        self._trick = CardCollection([])
+        self._trick = CardCollection()
         for player in self._players:
             player.bet = 0
             player.tricks = 0
             player.bonus = 0
         self._last_winning_player = self._players[0] # Start the round with the first player
-        self._round_history = CardCollection([])
+        self._round_history = CardCollection()
 
     def deal(self) -> None:
         """Deal cards to the players"""
@@ -136,7 +136,7 @@ class Game:
         
     def start_trick(self) -> None:
         """Start a trick"""
-        self._trick = CardCollection([])
+        self._trick = CardCollection()
         self._current_player = self._last_winning_player # Start the trick with the winner of the last trick
 
     def play_card(self) -> None:

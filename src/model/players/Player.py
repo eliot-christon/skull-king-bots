@@ -15,7 +15,7 @@ class Player(ABC):
 
     def __init__(self, name:str) -> None:
         self._name = name
-        self._hand = CardCollection([])
+        self._hand = CardCollection()
         self._bet = 0
         self._tricks = 0
         self._bonus = 0
