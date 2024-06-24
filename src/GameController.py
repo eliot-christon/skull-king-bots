@@ -4,6 +4,7 @@ __email__ = 'eliot.christon@gmail.com'
 from .model.Game import Game
 from .view.Graphics import Graphics
 
+
 class GameController:
     """GameController class for the Skull King game"""
 
@@ -19,5 +20,3 @@ class GameController:
                 self.__game.game_step()
             except KeyboardInterrupt:
                 break
-        
-    
