@@ -5,8 +5,6 @@ from .ComputerPlayer import ComputerPlayer
 from ..cards.Card import Card
 from ..cards.CardCollection import CardCollection
 
-import random
-import time
 from typing import Dict, Any
 
 
@@ -25,13 +23,10 @@ class ProbaPlayer(ComputerPlayer):
         super().__init__(name=name, delay=delay)
     
     def choose_card(self, features:Dict[str, Any]) -> "Card":
-        time.sleep(self._delay)
-        playable_cards = self.playable_cards(features["trick"].requested_color())
-        return playable_cards[0] # TODO: Implement a better strategy
+        pass
     
     def place_bet(self) -> int:
-        time.sleep(self._delay)
-        return random.randint(0, len(self.hand)) # TODO: Implement a better strategy
+        pass
     
     def proba_of_winning_trick(self, current_trick:CardCollection, card:Card) -> float:
         """Returns the probability of winning the trick if the player plays the given card"""

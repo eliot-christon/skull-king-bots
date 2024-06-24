@@ -107,7 +107,7 @@ class Game:
 
     def cond_game_ended(self) -> bool:
         """Check if the game has ended by checking the number of rounds"""
-        return self.round == 10
+        return self.round == 11
 
 #%% ACTIONS =========================================================================================
 
@@ -202,7 +202,8 @@ class Game:
             "trick": self.trick,
             "players": self.players,
             "current_player": self.current_player,
-            "round_history": self._round_history
+            "round_history": self._round_history,
+            "deck": self.deck
         }
     
 #%% GAME LOOP ========================================================================================
