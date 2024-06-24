@@ -93,7 +93,7 @@ class TkinterGraphics(Graphics):
 
     def create_card_label(self, card:Card) -> ttk.Label:
         card_path = f"assets/cards/{card.name}.png"
-        card_image = Image.open(card_path).resize(self.card_size, Image.ANTIALIAS)
+        card_image = Image.open(card_path).resize(self.card_size, Image.Resampling.LANCZOS)
         card_photo = ImageTk.PhotoImage(card_image)
         card_label = ttk.Label(self.trick_frame, image=card_photo)
         card_label.image = card_photo
@@ -164,7 +164,7 @@ class TkinterGraphics(Graphics):
             
         for card in playable_cards:
             card_path = f"assets/cards/{card.name}.png"
-            card_image = Image.open(card_path).resize(self.card_size, Image.ANTIALIAS)
+            card_image = Image.open(card_path).resize(self.card_size, Image.Resampling.LANCZOS)
             card_photo = ImageTk.PhotoImage(card_image)
             card_label = tk.Label(self.hand_frame, image=card_photo)
             card_label.image = card_photo
@@ -175,7 +175,7 @@ class TkinterGraphics(Graphics):
         if non_playable_cards is not None:
             for card in non_playable_cards:
                 card_path = f"assets/cards/{card.name}.png"
-                card_image = Image.open(card_path).resize(self.card_size, Image.ANTIALIAS)
+                card_image = Image.open(card_path).resize(self.card_size, Image.Resampling.LANCZOS)
                 # make it darker
                 card_image = card_image.point(lambda p: p * 0.5)
                 card_photo = ImageTk.PhotoImage(card_image)
