@@ -13,7 +13,7 @@ class CardCollection:
     """CardCollection class for the Skull King game. A collection of cards."""
 
     def __init__(self, cards:List[Card]=[]) -> None:
-        self.__cards = cards
+        self.__cards = cards.copy()
 
     def __str__(self) -> str:
         str_card_list = ["( {} )" .format(card) for card in self.__cards]
