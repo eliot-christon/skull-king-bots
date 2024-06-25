@@ -15,16 +15,6 @@ from PIL import Image, ImageTk
 class TkinterGraphics(Graphics):
     def __init__(self, root=tk.Tk()):
         super().__init__()
-        self.root = root
-        self.root.title("Skull King")
-        
-        # Screen dimensions
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = int(self.root.winfo_screenheight() * 0.9)
-        
-        # Set window size and position
-        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
-        self.root.resizable(True, True)
 
         # Configure styles
         self.style = ttk.Style()
@@ -33,6 +23,18 @@ class TkinterGraphics(Graphics):
         self.style.configure('TLabel', background='#333333', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('TLabel.TLabel', background='#006666', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('TButton', foreground='#ffffff', background='#666666', font=('Arial', 12))
+
+        self.root = root
+        self.root.title("Skull King")
+        self.root.configure(bg='#333333')
+        
+        # Screen dimensions
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = int(self.root.winfo_screenheight() * 0.9)
+        
+        # Set window size and position
+        self.root.geometry(f"{screen_width}x{screen_height}+0+0")
+        self.root.resizable(True, True)
 
         # Frames
         self.top_frame = ttk.Frame(self.root, style='TFrame')
@@ -205,3 +207,6 @@ class TkinterGraphics(Graphics):
             self.root.quit()  # Exit the main loop
             self.root.destroy()
             self._running = False
+
+    def display_history(self, history) -> None:
+        pass
