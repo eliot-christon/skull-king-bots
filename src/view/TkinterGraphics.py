@@ -10,6 +10,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox  # Import messagebox for confirmation dialog
 from PIL import Image, ImageTk
+from typing import List, Dict
+import os
 
 
 class TkinterGraphics(Graphics):
@@ -19,10 +21,12 @@ class TkinterGraphics(Graphics):
         # Configure styles
         self.style = ttk.Style()
         self.style.configure('TFrame', background='#333333')
-        self.style.configure('TFrame.TFrame', background='#006666')
+        self.style.configure('CurrentPlayer.TFrame', background='#006666')
+        self.style.configure('Grid.TFrame', background='#333333', foreground='#ffffff', font=('Arial', 16))
         self.style.configure('TLabel', background='#333333', foreground='#ffffff', font=('Arial', 12))
-        self.style.configure('TLabel.TLabel', background='#006666', foreground='#ffffff', font=('Arial', 12))
+        self.style.configure('CurrentPlayer.TLabel', background='#006666', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('TButton', foreground='#ffffff', background='#666666', font=('Arial', 12))
+        self.style.configure('Quit.TButton', background='#ffffff', foreground='#ee1122', font=('Arial', 16))
 
         self.root = root
         self.root.title("Skull King")
@@ -118,11 +122,11 @@ class TkinterGraphics(Graphics):
         player_bonus.pack()
 
         if player == current_player:
-            player_frame.configure(style='TFrame.TFrame')  # Highlight current player
-            player_name.configure(style='TLabel.TLabel')
-            player_score.configure(style='TLabel.TLabel')
-            player_tricks.configure(style='TLabel.TLabel')
-            player_bonus.configure(style='TLabel.TLabel')
+            player_frame.configure(style='CurrentPlayer.TFrame')  # Highlight current player
+            player_name.configure(style='CurrentPlayer.TLabel')
+            player_score.configure(style='CurrentPlayer.TLabel')
+            player_tricks.configure(style='CurrentPlayer.TLabel')
+            player_bonus.configure(style='CurrentPlayer.TLabel')
 
         return player_frame
 
@@ -208,5 +212,73 @@ class TkinterGraphics(Graphics):
             self.root.destroy()
             self._running = False
 
-    def display_history(self, history) -> None:
-        pass
+    def display_history(self, history:List[Dict[str, Dict[str, int]]]) -> None:
+        # clear the screen
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        frame = ttk.Frame(self.root, style='TFrame')
+        frame.pack(pady=20)
+
+        player_names = list(history[0].keys())
+        
+        # Create header
+        round_label = ttk.Label(frame, text="Round", font=('Helvetica', 10, 'bold'))
+        round_label.grid(row=1, column=0, padx=5, pady=5)
+
+        col = 2
+        for player_name in player_names:
+            player_label = ttk.Label(frame, text=player_name, font=('Helvetica', 14, 'bold'))
+            player_label.grid(row=0, column=col, columnspan=3, padx=5, pady=5)
+            
+            score_label = ttk.Label(frame, text="Score", font=('Helvetica', 7, 'italic'))
+            score_label.grid(row=1, column=col, padx=5, pady=5)
+            
+            tricks_bet_label = ttk.Label(frame, text="Tricks/Bet", font=('Helvetica', 7, 'italic'))
+            tricks_bet_label.grid(row=1, column=col + 1, padx=5, pady=5)
+            
+            bonus_label = ttk.Label(frame, text="Bonus", font=('Helvetica', 7, 'italic'))
+            bonus_label.grid(row=1, column=col + 2, padx=5, pady=5)
+            
+            col += 4
+
+        # Add a horizontal separator after the header
+        ttk.Separator(frame, orient='horizontal').grid(row=2, column=0, columnspan=col, sticky='ew', pady=5)
+
+        # Create rows for each round
+        for round_num, round_history in enumerate(history):
+            round_num_label = ttk.Label(frame, text=f"{round_num + 1}", font=('Helvetica', 14))
+            round_num_label.grid(row=(round_num * 2) + 3, column=0, padx=5, pady=5)
+
+            col = 2
+            for player_name in player_names:
+                player_history = round_history[player_name]
+                score = player_history['score']
+                tricks = player_history['tricks']
+                bet = player_history['bet']
+                bonus = player_history['bonus']
+
+                score_label = ttk.Label(frame, text=f"{score}", font=('Helvetica', 10, 'bold'))
+                score_label.grid(row=(round_num * 2) + 3, column=col, padx=5, pady=5)
+                
+                tricks_bet_label = ttk.Label(frame, text=f"{tricks}/{bet}", font=('Helvetica', 9))
+                tricks_bet_label.grid(row=(round_num * 2) + 3, column=col + 1, padx=5, pady=5)
+                
+                bonus_label = ttk.Label(frame, text=f"{bonus}" if bonus > 0 else "", font=('Helvetica', 9))
+                bonus_label.grid(row=(round_num * 2) + 3, column=col + 2, padx=5, pady=5)
+                
+                col += 4
+
+            # Add a horizontal separator after each round
+            ttk.Separator(frame, orient='horizontal').grid(row=(round_num * 2) + 4, column=0, columnspan=col, sticky='ew', pady=5)
+
+        # Add vertical separators between columns
+        for col_num in range(1, col, 4):
+            ttk.Separator(frame, orient='vertical').grid(row=0, column=col_num, rowspan=(len(history) * 2) + 2, sticky='ns')
+
+
+        # display the quit button
+        quit_button = ttk.Button(self.root, text="Quit", command=self.on_closing)
+        quit_button.configure(style='Quit.TButton')
+        quit_button.pack()
+        self.root.mainloop()
