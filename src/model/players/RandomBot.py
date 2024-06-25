@@ -3,14 +3,13 @@ __email__ = 'eliot.christon@gmail.com'
 
 from .ComputerPlayer import ComputerPlayer
 from ..cards.Card import Card
-from ..cards.CardCollection import CardCollection
 
 import random
 import time
 from typing import Dict, Any
 
 
-class RandomPlayer(ComputerPlayer):
+class RandomBot(ComputerPlayer):
     """Random Player class for the Skull King game, simulates a player that plays randomly"""
 
     def __init__(self, name:str, delay:float=0.1) -> None:

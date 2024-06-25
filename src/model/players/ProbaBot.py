@@ -16,7 +16,7 @@ def P_card_in_trick(card:Card, current_trick:CardCollection, N_occurences_left:i
         return 1.
     return cards_to_play_in_trick * N_occurences_left / N_cards_not_played
 
-class ProbaPlayer(ComputerPlayer):
+class ProbaBot(ComputerPlayer):
     """Proba Player class for the Skull King game, simulates a player that plays taking into account the probability of winning the trick"""
 
     def __init__(self, name:str, delay:float=0.1) -> None:
