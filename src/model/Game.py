@@ -33,6 +33,7 @@ class Game:
         self._last_winning_player:Optional[Player] = None
         self._current_player:Optional[Player] = None
         self._round_history = CardCollection()
+        self._history = []
         self.delays = delays
         self._running = True
 
@@ -67,7 +68,7 @@ class Game:
 
     @property
     def players(self) -> List[Player]:
-        return self._players
+        return self.roll_players(1 - self.round)
 
     @property
     def deck(self) -> CardCollection:
@@ -88,6 +89,10 @@ class Game:
     @property
     def current_player(self) -> Player:
         return self._current_player
+    
+    @property
+    def history(self) -> List[Dict[str, Dict[str, int]]]:
+        return self._history
 
 #%% CONDITIONS ======================================================================================
 
@@ -165,6 +170,7 @@ class Game:
     def end_round(self) -> None:
         """End a round, calculate the scores"""
         self.calculate_scores()
+        self.__update_history()
         self._round += 1
         self._players = self.roll_players()
         self._current_player = self._players[0]
@@ -206,6 +212,10 @@ class Game:
             "round_history": self._round_history,
             "deck": self.deck
         }
+    
+    def __update_history(self) -> None:
+        """Update the score history"""
+        self._history.append({player.name: {"score": player.score, "tricks": player.tricks, "bet": player.bet, "bonus": player.bonus} for player in self._players})
     
 #%% GAME LOOP ========================================================================================
 
