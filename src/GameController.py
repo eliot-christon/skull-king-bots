@@ -14,6 +14,9 @@ class GameController:
     
     def run(self) -> None:
         """Play the game"""
+
+        self.__graphics.start_screen()
+
         while self.__game.running and self.__graphics.running:
             try:
                 self.__graphics.render(self.__game)

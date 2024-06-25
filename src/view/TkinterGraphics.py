@@ -11,7 +11,6 @@ from tkinter import ttk
 from tkinter import messagebox  # Import messagebox for confirmation dialog
 from PIL import Image, ImageTk
 from typing import List, Dict
-import os
 
 
 class TkinterGraphics(Graphics):
@@ -26,15 +25,35 @@ class TkinterGraphics(Graphics):
         self.style.configure('TLabel', background='#333333', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('CurrentPlayer.TLabel', background='#006666', foreground='#ffffff', font=('Arial', 12))
         self.style.configure('TButton', foreground='#ffffff', background='#666666', font=('Arial', 12))
+        self.style.configure('Start.TButton', background='#ffffff', foreground='#22ee11', font=('Arial', 16))
         self.style.configure('Quit.TButton', background='#ffffff', foreground='#ee1122', font=('Arial', 16))
 
         self.root = root
         self.root.title("Skull King")
-        self.root.configure(bg='#333333')
+
+        # Player frames
+        self.player_frames = []
+
+        # Card size
+        self.card_size = (100, 150)
+
+        # Variables
+        self.selected_card_var = tk.StringVar()
+        self.selected_bet_var = tk.IntVar()
+        self.click_on_start = tk.BooleanVar()
+
+        # Protocol for window close
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+        self.setup()
+
+    def setup(self):
         
+        self.root.configure(bg='#333333')
+
         # Screen dimensions
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = int(self.root.winfo_screenheight() * 0.9)
+        screen_width = int(self.root.winfo_screenwidth() * 0.8)
+        screen_height = int(self.root.winfo_screenheight() * 0.6)
         
         # Set window size and position
         self.root.geometry(f"{screen_width}x{screen_height}+0+0")
@@ -62,19 +81,6 @@ class TkinterGraphics(Graphics):
         # Round label
         self.round_label = ttk.Label(self.right_frame, text="Round:1", style='TLabel')
         self.round_label.pack(side=tk.TOP, pady=10)
-
-        # Player frames
-        self.player_frames = []
-
-        # Card size
-        self.card_size = (100, 150)
-
-        # Variables
-        self.selected_card_var = tk.StringVar()
-        self.selected_bet_var = tk.IntVar()
-
-        # Protocol for window close
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def render(self, game:Game) -> None:
         # Update round number
@@ -211,6 +217,40 @@ class TkinterGraphics(Graphics):
             self.root.quit()  # Exit the main loop
             self.root.destroy()
             self._running = False
+        
+    def on_start_button_click(self):
+        self.click_on_start.set(True)
+    
+    def start_screen(self) -> None:
+        # display the "back.png" asset, on all the screen
+        # write "Skull King" in the middle of the screen
+        # display a button "Start Game"
+
+        # clear the screen
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        # Load the background image
+        background_image = Image.open("assets/cards/back.png")
+        # resize screen to fit the image
+        self.root.geometry(f"{background_image.width}x{background_image.height}+0+0")
+        background_photo = ImageTk.PhotoImage(background_image)
+        background_label = tk.Label(self.root, image=background_photo)
+        background_label.image = background_photo
+        background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Create the start button
+        start_button = ttk.Button(self.root, text="Start Game", command=self.on_start_button_click)
+        start_button.configure(style='Start.TButton')
+        start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        self.click_on_start.set(False)
+        self.root.wait_variable(self.click_on_start)
+        self.root.update()
+        # clear the screen
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        self.setup()
 
     def display_history(self, history:List[Dict[str, Dict[str, int]]]) -> None:
         # clear the screen

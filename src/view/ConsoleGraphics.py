@@ -15,6 +15,10 @@ class ConsoleGraphics(Graphics):
     def __init__(self) -> None:
         super().__init__()
 
+    def start_screen(self) -> None:
+        print("Welcome to Skull King!\n")
+        input("Press any key to start the game.")
+
     def render(self, game:Game) -> None:
         """Render the game in the console"""
         aff = "\n" * 10

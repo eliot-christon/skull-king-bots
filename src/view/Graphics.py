@@ -18,6 +18,11 @@ class Graphics(ABC):
     @property
     def running(self) -> bool:
         return self._running
+    
+    @abstractmethod
+    def start_screen(self) -> None:
+        """Display the start screen"""
+        pass
 
     @abstractmethod
     def render(self, game:Game) -> None:
