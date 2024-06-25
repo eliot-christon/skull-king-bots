@@ -84,7 +84,7 @@ class TkinterGraphics(Graphics):
 
         # Render players
         self.clear_player_frames()
-        for player in game.roll_players( 1 - game.round):
+        for player in game.players:
             player_frame = self.create_player_frame(player, game.current_player)
             player_frame.pack(side=tk.LEFT, padx=10)
             self.player_frames.append(player_frame)

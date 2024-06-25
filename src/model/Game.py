@@ -177,8 +177,9 @@ class Game:
 
 #%% UTILS ============================================================================================
 
-    def roll_players(self, offset:int=1) -> List[Player]:
+    def roll_players(self, in_offset:int=1) -> List[Player]:
         """Roll the players by the offset"""
+        offset = in_offset % len(self._players)
         return self._players[offset:] + self._players[:offset]
     
     def calculate_scores(self) -> None:
