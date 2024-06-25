@@ -23,6 +23,8 @@ class TkinterGraphics(Graphics):
         self.selected_bet_var = tk.IntVar()
         self.click_on_start = tk.BooleanVar()
 
+        self.player_frames = []
+
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.setup()
 
@@ -204,7 +206,9 @@ class TkinterGraphics(Graphics):
         self.clear_screen()
         self.display_background("assets/cards/back.png")
         self.create_start_button()
-        self.wait_for_start()
+        self.root.wait_variable(self.click_on_start)
+        self.clear_screen()
+        self.setup()
 
     def clear_screen(self):
         for widget in self.root.winfo_children():
@@ -212,18 +216,15 @@ class TkinterGraphics(Graphics):
 
     def display_background(self, image_path: str):
         background_image = Image.open(image_path)
-        self.root.geometry(f"{background_image.width}x{background_image.height}+0+0")
+        self.root.geometry(f"{background_image.width}x{background_image.height}")
         background_photo = ImageTk.PhotoImage(background_image)
         background_label = tk.Label(self.root, image=background_photo)
         background_label.image = background_photo
-        background_label.pack()
+        background_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
     def create_start_button(self):
         start_button = ttk.Button(self.root, text="Start", style="Start.TButton", command=self.on_start_button_click)
-        start_button.pack(pady=20)
-
-    def wait_for_start(self):
-        self.root.wait_variable(self.click_on_start)
+        start_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)  # Center the start button
 
     def start(self):
         self.root.mainloop()
