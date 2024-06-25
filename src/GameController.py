@@ -20,3 +20,4 @@ class GameController:
                 self.__game.game_step()
             except KeyboardInterrupt:
                 break
+        self.__graphics.display_history(self.__game.history)

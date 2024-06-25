@@ -6,6 +6,8 @@ from src.model.cards.CardCollection import CardCollection
 from .Graphics import Graphics
 from ..model.Game import Game
 
+from typing import List, Dict
+
 
 class ConsoleGraphics(Graphics):
     """ConsoleGraphics class for the Skull King game"""
@@ -43,7 +45,6 @@ class ConsoleGraphics(Graphics):
                 choice = -1
         return choice
     
-    
     def choose_card_interaction(self, hand: CardCollection, playable_cards: CardCollection) -> Card:
         print("Choose a card to play.")
         print(playable_cards)
@@ -53,3 +54,21 @@ class ConsoleGraphics(Graphics):
     def place_bet(self, hand: CardCollection) -> int:
         print("Place a bet.")
         return self.get_number(0, len(hand), "Enter your bet")
+    
+    def display_history(self, history:List[Dict[str, Dict[str, int]]]) -> None:
+        aff = "\n" * 10
+        player_names = list(history[0].keys())
+        player_strs = [player_name + " " * (15 - len(player_name)) for player_name in player_names]
+        aff += " Round | " + " | ".join(player_strs) + "\n"
+        aff += "-" * (7 + (18) * len(player_names)) + "\n"
+        for round_num, round_history in enumerate(history):
+            aff += f" {round_num + 1}" + " " * (6 - len(str(round_num + 1)))
+            for player_history in round_history.values():
+                aff += f"| {player_history['score']}" + " " * (5 - len(str(player_history['score'])))
+                aff += " " * (2 - len(str(player_history['tricks']))) + f" {player_history['tricks']}/{player_history['bet']}" + " " * (2 - len(str(player_history['bet'])))
+                if player_history['bonus'] > 0:
+                    aff += f" +{player_history['bonus']}" + " " * (3 - len(str(player_history['bonus'])))
+                else:
+                    aff += " " * 5
+            aff += "\n"
+        print(aff, flush=True, end="")

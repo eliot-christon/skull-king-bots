@@ -6,6 +6,7 @@ from ..model.cards.CardCollection import CardCollection
 from ..model.cards.Card import Card
 
 from abc import ABC, abstractmethod
+from typing import List, Dict
 
 
 class Graphics(ABC):
@@ -31,5 +32,10 @@ class Graphics(ABC):
     @abstractmethod
     def place_bet(self, hand:CardCollection) -> int:
         """Place a bet"""
+        pass
+
+    @abstractmethod
+    def display_history(self, history:List[Dict[str, Dict[str, int]]]) -> None:
+        """Display the history of the game in terms of scores, bets and tricks per player per round"""
         pass
 

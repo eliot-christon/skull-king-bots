@@ -214,8 +214,8 @@ class Game:
         }
     
     def __update_history(self) -> None:
-        """Update the score history"""
-        self._history.append({player.name: {"score": player.score, "tricks": player.tricks, "bet": player.bet, "bonus": player.bonus} for player in self._players})
+        """Update the score history each round"""
+        self._history.append({player.name: {"score": player.score, "tricks": player.tricks, "bet": player.bet, "bonus": player.bonus} for player in self.players})
     
 #%% GAME LOOP ========================================================================================
 
