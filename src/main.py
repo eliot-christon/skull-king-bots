@@ -17,10 +17,10 @@ def main():
     
     delay = 0.05
     player1 = RandomBot("Player 1", delay=delay)
-    player2 = TrickCompletionBot("Player 2", delay=delay)
+    player2 = RandomBot("Player 2", delay=delay)
     player3 = RandomBot("Player 3", delay=delay)
     player4 = RandomBot("Player 4", delay=delay)
-    player5 = HumanPlayer("The best", graphics=graphics)
+    player5 = RandomBot("Player 5", delay=delay)
 
     game = Game([player1, player2, player3, player4, player5], delays=False)
 
@@ -49,4 +49,4 @@ def main2():
 
 
 if __name__ == "__main__":
-    main2()
+    main()
