@@ -12,9 +12,8 @@ from typing import Dict, Any, List
 import time
 
 
-class MiniMaxPlayer(ComputerPlayer):
-    """MiniMaxPlayer class for the Skull King game, simulates a player that plays with a MiniMax strategy (like humans do in chess).
-    It will try to maximize its score and minimize the score of the other players."""
+class TrickCompletionBot(ComputerPlayer):
+    """TrickCompletionBot class for the Skull King game, simulates a player that plays with a TrickCompletionBot strategy."""
 
     def __init__(self, name:str, delay:float=0.1) -> None:
         super().__init__(name=name, delay=delay)
@@ -61,7 +60,6 @@ class MiniMaxPlayer(ComputerPlayer):
                 
         # recursive function
         def create_trick_tree(trick:CardCollection, cards_not_played:CardCollection, current_trick:CardCollection, len_trick:int) -> None:
-            print(trick)
             if len(trick) == len_trick:
                 possible_tricks.append(trick)
                 return
