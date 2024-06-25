@@ -50,14 +50,14 @@ class TrickCompletionBot(ComputerPlayer):
         """Places the bet randomly"""
         # count the number of character cards in the hand and trump cards > 12
         n = len([card for card in self._hand if isinstance(card, CharacterCard) or (isinstance(card, TrumpCard) and card.value > 12)])
-        return (2 * n) // 3
+        return int(0.7 * n + 0.12 * len(self._hand))
     
     def __create_all_possible_tricks(self, chosen_card:Card, cards_not_played:CardCollection, current_trick:CardCollection, in_len_trick:int) -> List[CardCollection]:
         """Creates the game tree for the MiniMax algorithm with all the possible endings of the trick.
         Only next card played is the one of the player (possible_cards)"""
         possible_tricks = []
         len_trick = min(in_len_trick, len(current_trick) + 3)
-                
+        
         # recursive function
         def create_trick_tree(trick:CardCollection, cards_not_played:CardCollection, current_trick:CardCollection, len_trick:int) -> None:
             if len(trick) == len_trick:
