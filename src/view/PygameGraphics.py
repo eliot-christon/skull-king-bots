@@ -144,7 +144,7 @@ class PygameGraphics(Graphics):
 
         winner_index = max(range(len(player_names)), key=lambda i: history[-1][player_names[i]]["score"])
         crown_icon = pygame.image.load("assets/icons/crown.png")
-        cromw_icon = pygame.transform.scale(crown_icon, (crown_icon.get_width()//4, crown_icon.get_height()//4))
+        crown_icon = pygame.transform.scale(crown_icon, (crown_icon.get_width()//4, crown_icon.get_height()//4))
         x_crown = x_min + (winner_index + 1)*x_step + x_step//2
         y_crown = y_min + (len(history)+1)*y_step + y_step//2
         self.screen.blit(crown_icon, (x_crown - crown_icon.get_width()//2, y_crown - crown_icon.get_height()//2))
