@@ -264,7 +264,8 @@ class PygameGraphics(Graphics):
             name = font_player_name.render(player.name, True, self.colors['white'])
             name_rect = name.get_rect(topleft=(width//8, (i + 1) * height//10))
             player_surf.blit(name, name_rect)
-            info = font_player_info.render(f"{player.score} - {player.tricks}/{player.bet}", True, self.colors['white'])
+            bonus_str = f"+{player.bonus}" if player.bonus > 0 else ""
+            info = font_player_info.render(f"{player.score} ({player.tricks}/{player.bet}) {bonus_str}", True, self.colors['white'])
             info_rect = info.get_rect(topleft=(width//5, (i + 1) * height//10 + height//20))
             player_surf.blit(info, info_rect)
         

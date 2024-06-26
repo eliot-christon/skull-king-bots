@@ -62,9 +62,9 @@ def main3():
     player5 = TrickCompletionBot("TC Bot 2", delay=delay)
     player6 = RandomBot("Random Bot 4", delay=delay)
     player7 = RandomBot("Random Bot 5", delay=delay)
-    player9 = HumanPlayer("Human", graphics=graphics)
+    player8 = HumanPlayer("Human", graphics=graphics)
 
-    game = Game([player1, player2, player3, player4, player5, player6, player7], delays=False)
+    game = Game([player1, player2, player3, player4, player5, player6, player8], delays=False)
 
     controller = GameController(game, graphics)
 
