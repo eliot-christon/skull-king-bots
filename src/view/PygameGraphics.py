@@ -236,19 +236,25 @@ class PygameGraphics(Graphics):
         return self.bet
     
     def tigress_popup(self) -> None:
-        """Create the tigress popup surface"""
-        popup_surf = pygame.Surface((self.width//3, self.height//3))
-        popup_surf.fill(self.colors['bg'])
-        # Display the tigress popup
-        font = pygame.font.Font(None, self.height//30)
-        text = font.render("You played the Tigress, choose Escape or Pirate", True, self.colors['white'])
-        text_rect = text.get_rect(center=(popup_surf.get_width()//2, popup_surf.get_height()//2))
-        popup_surf.blit(text, text_rect)
+        """Create the tigress popup surface"""       
         
         # Add a button for escape
-        escape_button = Button(self.screen, popup_surf.get_width()//4, (3*popup_surf.get_height())//4, popup_surf.get_width()//4, popup_surf.get_height()//4, text='Escape', fontSize=popup_surf.get_height()//8, margin=popup_surf.get_height()//16, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_escape_button_click, radius=20)
-        # Add a button for pirate
-        pirate_button = Button(self.screen, (3*popup_surf.get_width())//4, (3*popup_surf.get_height())//4, popup_surf.get_width()//4, popup_surf.get_height()//4, text='Pirate', fontSize=popup_surf.get_height()//8, margin=popup_surf.get_height()//16, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_pirate_button_click, radius=20)
+        width = self.width - self.width//6
+        y = (7*self.height)//12
+        x_center = (5*width)//11 + self.width//6
+        w = width//12
+        h = self.height//14
+        x = x_center - w//2
+        escape_button = Button(self.screen, x, y, w, h, text='1. Escape', fontSize=self.height//35, margin=self.height//60, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_escape_button_click, radius=20)
+        x_center = (6*width)//11 + self.width//6
+        x = x_center - w//2
+        pirate_button = Button(self.screen, x, y, w, h, text='2. Pirate', fontSize=self.height//35, margin=self.height//60, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_pirate_button_click, radius=20)
+        
+        # add text to the screen
+        font = pygame.font.Font(None, self.height//26)
+        text = font.render("Choose the Tigress as:", True, self.colors['white'])
+        text_rect = text.get_rect(center=(width//2 + self.width//6, (6.7*self.height)//12))
+        self.screen.blit(text, text_rect)
         
         pygame.display.update()
         self.tigress_as_escape = None
