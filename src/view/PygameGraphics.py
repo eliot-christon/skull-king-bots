@@ -19,7 +19,10 @@ class PygameGraphics(Graphics):
     def __init__(self):
         super().__init__()
         pygame.init()
-        self.screen = pygame.display.set_mode((1500, 900))
+        # get screen size
+        width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
+        print(f"Screen size: {width}x{height}")
+        self.screen = pygame.display.set_mode((min(1500, width-100), min(900, height-100)))
         self.card_assets = "assets/cards/"
         self.colors = {
             'white': (255, 255, 255),
