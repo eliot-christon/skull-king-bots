@@ -88,6 +88,12 @@ class CardCollection:
             elif isinstance(card, CharacterCard) and card.value > 14:
                 break
         return 'any'
+    
+    def unflag_tigress(self) -> None:
+        """Unflag the Tigress cards in the collection"""
+        for card in self.__cards:
+            if isinstance(card, Tigress):
+                card.as_pirate()
 
     def first_index_of(self, card:Card) -> int:
         """Return the index of the first card in the collection"""

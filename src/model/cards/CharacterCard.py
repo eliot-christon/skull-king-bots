@@ -53,6 +53,11 @@ class Tigress(Pirate):
         self._value = 0
         return self
     
+    def as_pirate(self) -> "Tigress":
+        self._name = "Tigress"
+        self._value = 16
+        return self
+    
     def details(self) -> str:
         return "The Tigress can be played as a Pirate or as a flag."
 

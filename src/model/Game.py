@@ -130,6 +130,7 @@ class Game:
         """Deal cards to the players"""
         # Shuffle the deck
         self._deck.shuffle()
+        self._deck.unflag_tigress()
         for i, player in enumerate(self._players):
             player.hand = self._deck[i*self.round:(i+1)*self.round]
 
