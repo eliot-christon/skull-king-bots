@@ -48,9 +48,10 @@ class Tigress(Pirate):
         super().__init__()
         self._name = "Tigress"
     
-    def as_flag(self) -> None:
+    def as_flag(self) -> "Tigress":
         self._name = "Tigress Flag"
         self._value = 0
+        return self
     
     def details(self) -> str:
         return "The Tigress can be played as a Pirate or as a flag."

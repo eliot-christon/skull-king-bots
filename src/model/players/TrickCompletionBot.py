@@ -4,7 +4,7 @@ __email__ = 'eliot.christon@gmail.com'
 from .ComputerPlayer import ComputerPlayer
 from .Player import Player
 from ..cards.Card import Card
-from ..cards.CharacterCard import CharacterCard
+from ..cards.CharacterCard import CharacterCard, Tigress
 from ..cards.NumberCard import NumberCard, TrumpCard
 from ..cards.CardCollection import CardCollection
 
@@ -21,7 +21,9 @@ class TrickCompletionBot(ComputerPlayer):
     def choose_card(self, features:Dict[str, Any]) -> "Card":
         """Chooses the best card to play using the MiniMax algorithm"""
         t0 = time.time()
-        possible_cards = self.playable_cards(features["trick"].requested_color())
+        possible_cards = self.playable_cards(features["trick"].requested_color()).copy()
+        if any(isinstance(card, Tigress) for card in possible_cards):
+            possible_cards.add(Tigress().as_flag())
         current_trick = features["trick"]
         cards_not_played = features["deck"] - features["round_history"]
         players = features["players"]
@@ -39,6 +41,11 @@ class TrickCompletionBot(ComputerPlayer):
                 if score > best_score:
                     best_score = score
                     best_card = card
+        
+        if best_card == Tigress().as_flag():
+            tigress_card_in_hand = [card for card in self._hand if isinstance(card, Tigress)][0]
+            tigress_card_in_hand.as_flag()
+            best_card = tigress_card_in_hand
         
         # delay
         if time.time() - t0 < self._delay:

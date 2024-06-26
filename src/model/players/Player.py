@@ -24,6 +24,16 @@ class Player(ABC):
     def __str__(self) -> str:
         return f"Player: {self._name}, Score: {self._score}"
     
+    def __eq__(self, other:"Player") -> bool:
+        if not isinstance(other, Player):       return False
+        if self._name != other.name:            return False
+        if self._hand != other.hand:            return False
+        if self._score != other.score:          return False
+        if self._bet != other.bet:              return False
+        if self._tricks != other.tricks:        return False
+        if self._bonus != other.bonus:          return False
+        return True
+    
     @property
     def name(self) -> str:
         return self._name

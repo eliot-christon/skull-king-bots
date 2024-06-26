@@ -5,6 +5,7 @@ __email__ = 'eliot.christon@gmail.com'
 from .Graphics import Graphics
 from ..model.Game import Game
 from ..model.cards.Card import Card
+from ..model.cards.CharacterCard import Tigress
 from ..model.cards.CardCollection import CardCollection
 
 import pygame
@@ -21,7 +22,6 @@ class PygameGraphics(Graphics):
         pygame.init()
         # get screen size
         width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
-        print(f"Screen size: {width}x{height}")
         self.screen = pygame.display.set_mode((min(1500, width-100), min(900, height-100)))
         self.card_assets = "assets/cards/"
         self.colors = {
@@ -196,6 +196,11 @@ class PygameGraphics(Graphics):
 
             pygame.display.update()
         
+        if isinstance(chosen_card, Tigress):
+            self.tigress_popup()
+            if self.tigress_as_escape:
+                return chosen_card.as_flag()
+        
         return chosen_card
 
     def place_bet(self, hand:CardCollection) -> int:
@@ -229,9 +234,38 @@ class PygameGraphics(Graphics):
         del self.bet_button
 
         return self.bet
+    
+    def tigress_popup(self) -> None:
+        """Create the tigress popup surface"""
+        popup_surf = pygame.Surface((self.width//3, self.height//3))
+        popup_surf.fill(self.colors['bg'])
+        # Display the tigress popup
+        font = pygame.font.Font(None, self.height//30)
+        text = font.render("You played the Tigress, choose Escape or Pirate", True, self.colors['white'])
+        text_rect = text.get_rect(center=(popup_surf.get_width()//2, popup_surf.get_height()//2))
+        popup_surf.blit(text, text_rect)
+        
+        # Add a button for escape
+        escape_button = Button(self.screen, popup_surf.get_width()//4, (3*popup_surf.get_height())//4, popup_surf.get_width()//4, popup_surf.get_height()//4, text='Escape', fontSize=popup_surf.get_height()//8, margin=popup_surf.get_height()//16, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_escape_button_click, radius=20)
+        # Add a button for pirate
+        pirate_button = Button(self.screen, (3*popup_surf.get_width())//4, (3*popup_surf.get_height())//4, popup_surf.get_width()//4, popup_surf.get_height()//4, text='Pirate', fontSize=popup_surf.get_height()//8, margin=popup_surf.get_height()//16, inactiveColour=(128, 128, 128), hoverColour=(255, 0, 0), pressedColour=(0, 255, 0), onClick=self.on_pirate_button_click, radius=20)
+        
+        pygame.display.update()
+        self.tigress_as_escape = None
+        while self.tigress_as_escape is None:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    self.on_closing()
+            
+            pygame_widgets.update(events)
+            pygame.display.update()
+        
+        del escape_button
+        del pirate_button
 
 #%% SURFACES
-
+        
     def banner_surface(self) -> pygame.Surface:
         """Create the banner surface"""
         banner = pygame.Surface((self.width, self.height//10))
@@ -393,6 +427,12 @@ class PygameGraphics(Graphics):
         
     def on_start_button_click(self):
         self.clicked_start = True
+    
+    def on_escape_button_click(self):
+        self.tigress_as_escape = True
+        
+    def on_pirate_button_click(self):
+        self.tigress_as_escape = False
 
 #%% UTILS
 
