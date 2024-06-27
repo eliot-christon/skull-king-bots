@@ -43,6 +43,15 @@ class GeneticBot(ComputerPlayer):
         model.compile(loss='mean_squared_error', optimizer='adam')
         return model
     
+    @property
+    def model(self) -> "Model":
+        """Get the model for the bot to use"""
+        return self._model
+
+    def set_model(self, model:Model) -> None:
+        """Set the model for the bot to use"""
+        self._model = model
+    
     def choose_card(self, features:Dict[str, Any]) -> "Card":
         t0 = time.time() # to keep track of the time taken by the bot to choose a card
         
@@ -51,17 +60,19 @@ class GeneticBot(ComputerPlayer):
         # extract features
         general_features = self.transform_features(features)
 
-        best_card = None
-        best_score = -np.inf
+        if len(playable_cards) > 1:
+            best_card = None
+            best_score = -np.inf
 
-        for card in playable_cards:
-            card_features = self.card_features(card, features["trick"])
-            total_features = np.concatenate([general_features, card_features]).reshape(1, -1)
-            score = self._model.predict(total_features)
-            if score > best_score:
-                best_score = score
-                best_card = card
-        
+            for card in playable_cards:
+                card_features = self.card_features(card, features["trick"])
+                total_features = np.concatenate([general_features, card_features]).reshape(1, -1)
+                score = self._model.predict(total_features)
+                if score > best_score:
+                    best_score = score
+                    best_card = card
+        else:
+            best_card = playable_cards[0]
         # delay just before returning the card
         if time.time() - t0 < self._delay:
             time.sleep(self._delay - (time.time() - t0))
