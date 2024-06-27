@@ -1,3 +1,4 @@
 pillow>=10.3.0
 pygame==2.6.0
 pygame_widgets==1.1.5
+tensorflow==2.12.0
