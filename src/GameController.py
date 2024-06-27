@@ -24,3 +24,7 @@ class GameController:
             except KeyboardInterrupt:
                 break
         self.__graphics.display_history(self.__game.history)
+    
+    def get_history(self) -> str:
+        """Get the game history"""
+        return self.__game.history

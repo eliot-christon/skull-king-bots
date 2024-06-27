@@ -15,7 +15,7 @@ from .GameController import GameController
 def main():
     """Main function"""
     
-    graphics = TkinterGraphics()
+    graphics = ConsoleGraphics()
     
     delay = 0.05
     player1 = RandomBot("Player 1", delay=delay)
@@ -90,4 +90,4 @@ def main4():
     controller.run()
 
 if __name__ == "__main__":
-    main4()
+    main()
