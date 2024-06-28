@@ -4,7 +4,6 @@ __email__ = 'eliot.christon@gmail.com'
 from .model.Game import Game
 from .model.players.RandomBot import RandomBot
 from .model.players.TrickCompletionBot import TrickCompletionBot
-from .model.players.GeneticBot import GeneticBot
 from .model.players.HumanPlayer import HumanPlayer
 from .view.ConsoleGraphics import ConsoleGraphics
 from .view.TkinterGraphics import TkinterGraphics
@@ -74,6 +73,7 @@ def main3():
 
 def main4():
     """Main function"""
+    from .model.players.GeneticBot import GeneticBot
         
     graphics = PygameGraphics()
     
@@ -90,4 +90,4 @@ def main4():
     controller.run()
 
 if __name__ == "__main__":
-    main()
+    main3()
